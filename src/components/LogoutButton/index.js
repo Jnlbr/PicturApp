@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { isLogged } from '../../store/actions';
+// import { connect } from 'react-redux';
+// import { isAuth } from '../../store/actions/user';
 import LogoutButton from './logoutButton';
 import { logOut } from '../../api'
 
 class LogoutButtonContainer extends Component {
-    handleClick = () => {
-        let { isLogged } = this.props;
-                
+    handleClick = () => {            
         logOut().then(() => {
-            isLogged(false);
+            // Handle success, send redirect or something
         }).catch((error) => {
             // Handle error
         })
@@ -20,12 +18,4 @@ class LogoutButtonContainer extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        isLogged: is => {
-            dispatch(isLogged(is));
-        }
-    }
-}
-
-export default connect(null,mapDispatchToProps)(LogoutButtonContainer)
+export default LogoutButtonContainer

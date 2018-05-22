@@ -5,3 +5,4 @@ export { default as LogoutButton } from './LogoutButton';
 // Other components
 export { default as Pictures } from './Pictures';
 export { default as FileUpload } from './FileUpload';
+export { default as AppBar } from './AppBar'

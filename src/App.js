@@ -1,38 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { auth } from 'firebase/app';
-import { Home } from './scenes';
-import { isLogged } from './store/actions';
+import { auth } from './api/firebase';
+import Main from './scenes';
+import { isAuth } from './store/actions/user';
+import withRoot from './util/withRoot';
 
-class App extends Component {
+class AppContainer extends Component {
     componentDidMount() {
-        let { isLogged } = this.props;
-        auth().onAuthStateChanged((user) => {
+        let { isAuth } = this.props;
+        auth.onAuthStateChanged((user) => {
             if (user) {
                 console.log(user)
-                isLogged(true);
+                isAuth(true);
             } else {
-                console.log('Is not logged');
-                isLogged(false);
+                console.log('Is not authenticated');
+                isAuth(false);
             }
         })
     }
     render() {
-        return (
-            
-            <Home />
-        
-        );
+        return <Main />
     }
 }
 
 
 const mapDispatchToProps = dispatch => {
     return {
-        isLogged: is => {
-            dispatch(isLogged(is))
+        isAuth: is => {
+            dispatch(isAuth(is))
         }
     }
 }
+const App = connect(
+    null, 
+    mapDispatchToProps
+)(AppContainer);
 
-export default connect(null, mapDispatchToProps)(App);
+export default withRoot(App);

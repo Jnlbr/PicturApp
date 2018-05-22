@@ -1,12 +1,14 @@
-import { firestore, auth } from 'firebase/app';
+import { database, auth } from './firebase';
 
+// Insert image into the DB
 export default (storageRef, title = 'Image', description = 'This is an image') => {
     
     return new Promise((res,rej) => { 
-        const { uid } = auth().currentUser;
+        const { uid } = auth.currentUser;
 
+        // ERROR: if image does not exist
         storageRef.getDownloadURL().then((url) => {
-            firestore().collection('pictures').add({
+            database.collection('pictures').add({
                 userId: uid,
                 title: title,
                 image: url,

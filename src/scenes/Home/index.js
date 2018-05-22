@@ -1,25 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GoogleCredentials, LogoutButton, Pictures, FileUpload } from '../../components'
+import Home from './home'
 
-class Home extends Component {
+class HomeContainer extends Component {
     
     render() {
+        console.log(this.props)
         
-        return (
-            <div>
-                <GoogleCredentials />
-                <LogoutButton />
-                <FileUpload />
-                <Pictures />
-                <h1> Is logged? {String(this.props.logged)} </h1>
-            </div>
-        );
+        return <Home isLogged={this.props.isLogged}/>
     }
 }
 
-const mapStateToProps = state => ({
-    logged: state.logged,
-});
+const mapStateToProps = state => {
+    let { isLogged } = state.auth
+    return {
+        isLogged: isLogged,
+    }
+}
 
-export default connect(mapStateToProps)(Home)
+export default connect(mapStateToProps)(HomeContainer)

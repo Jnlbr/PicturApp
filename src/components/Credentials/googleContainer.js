@@ -1,32 +1,30 @@
 import React, { Component } from 'react';
 import Google from './google';
 import {connect} from 'react-redux';
-import { isLogged } from '../../store/actions'
-import { loginWith } from '../../api'
+import { login } from '../../store/actions/user'
 
 class GoogleContainer extends Component {
 
-    handleClick = () => {
-        let { isLogged } = this.props;
-
-        loginWith('google').then(() => {
-            isLogged(true);
-        }).catch((error) => {
-            // Handle error
-        })
+    handleLogin = () => {
+        let { login } = this.props;
+        login({
+            provider: 'google',
+            email: '',
+            password: '',
+        });
     }
 
     render() {
 
-        return <Google handleClick={this.handleClick} />
+        return <Google handleLogin={this.handleLogin} />
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        isLogged: is => {
-            dispatch(isLogged(is));
-        },
+        login: (form) => {
+            dispatch(login(form))
+        }
     }
 }
 

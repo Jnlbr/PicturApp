@@ -11,12 +11,10 @@ class PicturesContainer extends Component {
         }
     }
     componentDidMount() {
-        getPictures().then((pics) => {
-            pics.forEach((picture) => {
-                this.setState((prevState) => ({
-                    images: [picture.data(), ...prevState.images],
-                }));
-            });
+        getPictures().then((pictures) => {
+            this.setState({
+                images: pictures
+            })
         }).catch((error) => {
             console.log(error)
             // Handle error

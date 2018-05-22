@@ -1,23 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { initializeApp, firestore } from 'firebase';
-import {config, firestoreConfig} from './util/fb-config';
+import thunk from 'redux-thunk'
 import reducers from './store/reducers';
-import App from './App';
+import App from './app';
 // import registerServiceWorker from './registerServiceWorker';
 
-let store = createStore(reducers);
-
-initializeApp(config);
-firestore();
-firestore().settings(firestoreConfig)
+let store = createStore(
+    reducers,
+    applyMiddleware(thunk)
+);
 
 ReactDOM.render((
-    <Provider store={store}>
+    <Provider store={store} >
         <App />
-    </Provider> ), 
-    document.getElementById('root')
+    </Provider>
+    ), document.getElementById('root')
 );
 // registerServiceWorker();

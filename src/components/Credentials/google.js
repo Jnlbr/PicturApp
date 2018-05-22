@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Google = ({handleClick, ...props}) => (
-    <button onClick={handleClick}> Sign with a Google Account! </button>
+const Google = ({handleLogin, ...props}) => (
+    <button onClick={handleLogin}> Sign with a Google Account! </button>
 )
 
 export default Google
