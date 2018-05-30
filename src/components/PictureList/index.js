@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Pictures from './pictures';
+import Picture from '../Picture';
 import { getPictures } from '../../api'
 
 class PictureList extends Component {
@@ -11,7 +11,7 @@ class PictureList extends Component {
         }
     }
     componentDidMount() {
-        getPictures().then((pictures) => {
+        getPictures().then((pictures) => {            
             this.setState({
                 pictures: pictures
             });
@@ -21,12 +21,14 @@ class PictureList extends Component {
         });
     }
     render() {
-        
+        const { pictures } = this.state;
+        const _pictures = pictures.map((pic,i) => (
+            <Picture key={i} data={{...pic}}/>
+        ));
+
         return (
             <div>
-                <Pictures
-                    pictures={this.state.pictures}
-                />
+                {_pictures}
             </div>
         );
     }

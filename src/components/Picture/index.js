@@ -1,53 +1,74 @@
 import React, { Component } from 'react';
 import Picture from './picture';
-import { doComment } from '../../api';
+import PropTypes from 'prop-types';
+import { doComment, getComments } from '../../api';
 
 class PictureContainer extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            picture: {...props},
-            comment: '',
+            picture: {...props.data},
+            comments: [],
+            text: '',
             expanded: false,
+            loadingComments: false,          
         }
     }
+    handleTextChange = (event) => {
+        this.setState({ text: event.target.value });
+    }
     handleComment = () => {
-        let { id } = this.state.picture;
-        let comment = this.state.comment;
-
-        doComment(id,comment).then(() => {
+        const { text, picture } = this.state;
+        doComment(picture.id, text).then(() => {
             console.log('Success')
             // Handle comment success
         }).catch((error) => {
             console.log(error);
             // Handle error
-        })
-    }
-    handleTextChange = (event) => {
-        this.setState({
-            comment: event.target.value,
         });
     }
     handleExpandClick = () => {
-        this.setState({ expanded: !this.state.expanded });
+        const { expanded } = this.state;
+        if(expanded) {
+            this.setState({ expanded: false });
+        } else {
+            this.setState({ loadingComments: true })
+            this.searchComment();
+        }
+    }
+    searchComment = () => {
+        const { id } = this.state.picture;
+        getComments(id).then((comments) => {
+            this.setState({
+                loadingComments: false,
+                expanded: true,
+                comments: comments
+            });
+        }).catch((error) => {
+            this.setState({
+                loadingComments: false,
+            });
+        });
     }
 
     render() {
-        const { url, description, displayName, photoURL, comments } = this.state.picture; // For now
-        
+        const { expanded, comments, loadingComments, picture } = this.state;
+
         return <Picture
             handleTextChange={this.handleTextChange}
             handleComment={this.handleComment}
             handleExpandClick={this.handleExpandClick}
-            displayName={displayName}
-            photoURL={photoURL}
-            url={url} 
-            description={description}
+            picture={picture}
+            expanded={expanded}
             comments={comments}
-            expanded={this.state.expanded}
+            loadingComments={loadingComments}
         />
     }
+}
+
+PictureContainer.propTypes = {
+    data: PropTypes.object.isRequired,
 }
 
 export default PictureContainer

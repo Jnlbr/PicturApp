@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { 
     Card, 
     CardHeader, 
@@ -12,6 +13,7 @@ import {
     Typography,
     Collapse,
 } from '@material-ui/core';
+import Comment from './comment';
 
 const styles = theme => ({
     root: {
@@ -36,59 +38,66 @@ const styles = theme => ({
     },
 })
 
-const Picture = ({ classes, handleComment, handleTextChange, handleExpandClick, comments, ...props }) => {
-    
-    console.log(comments)
-    const _comments = comments.forEach(comment => {
-        console.log(comment.commentText)
-    });
+const Picture = ({ classes, picture, handleComment, handleTextChange, handleExpandClick, expanded, loadingComments, comments }) => {
 
-    console.log(_comments)
-    
     return (
         <div className={classes.root}>
             <Card className={classes.card}>
                 <CardHeader
-                    title={props.displayName}
+                    title={picture.displayName}
                     avatar={
                         <Avatar
-                            src={props.photoURL}
-                            alt={props.displayName}
+                            src={picture.photoURL}
+                            alt={picture.displayName}
                             aria-label="Recipe" />
                     }
-                    action={
+                    /* action={
                         <IconButton> P </IconButton>
-                    }
+                    } */
                 />
                 <CardMedia
                     className={classes.media}
-                    image={props.url}
+                    image={picture.url}
                 />
                 <CardContent>
                     <Typography>
-                        {props.description}
+                        {picture.description}
                     </Typography>
                 </CardContent>
                 <CardActions>
                     <IconButton
                         className={classnames(classes.expand, {
-                            [classes.expandOpen]: props.expanded,
+                            [classes.expandOpen]: expanded,
                         })}
                         onClick={handleExpandClick}
-                        aria-expanded={props.expanded}
-                        aria-label="Show more"
-                    >                        
+                        aria-expanded={expanded}
+                        aria-label="Show comments"
+                    > { loadingComments && "..." /* Some transition */} 
                     </IconButton>                                     
                 </CardActions>
-                <Collapse in={props.expanded} timeout="auto" unmountOnExit>
-                    { _comments }
-                    {/* <input type="text" onChange={handleTextChange} />
-                    <button onClick={handleComment}> Comment </button> */}
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <input type="text" onChange={handleTextChange} />
+                    <button onClick={handleComment}> Comment </button>
+                    {expanded &&
+                        comments.map((comment,i) => 
+                            <Comment key={i} data={comment}/>
+                        )
+                    }
                 </Collapse>
             </Card>
         </div>
     )
 }
 
+Picture.propTypes = {
+    classes: PropTypes.object.isRequired,
+    picture: PropTypes.object.isRequired,
+    handleComment: PropTypes.func.isRequired,
+    handleExpandClick: PropTypes.func.isRequired,
+    handleTextChange: PropTypes.func.isRequired,
+    expanded: PropTypes.bool.isRequired,
+    loadingComments: PropTypes.bool.isRequired,
+    comments: PropTypes.array.isRequired,
+}
 
 export default withStyles(styles)(Picture)

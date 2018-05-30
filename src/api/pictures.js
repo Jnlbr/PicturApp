@@ -7,19 +7,9 @@ export default () => {
         ref.get().then((querySnapshot) => {
             let pictures = [];
             querySnapshot.forEach((picture) => {          
-                let userPicture = picture.data();
-                let id = picture.id;
-                let comments = [];
-                // I don't like this... This is horrible
-                ref.doc(id).collection('comments').get().then((_querySnapshot) => {
-                    _querySnapshot.forEach((comment) => {
-                        comments.push(comment.data());
-                    });
-                });
                 pictures.push({
                     id: picture.id,
-                    comments: comments,
-                    ...userPicture,
+                    ...picture.data(),
                 });              
             });            
             res(pictures);

@@ -13,7 +13,7 @@ const styles = {
     },
 }
 
-const _AppBar = ({ isLogged, classes }) => (
+const _AppBar = ({ classes, isLogged }) => (
     <AppBar position="static" color="default">
         <Toolbar>
             <div className={classes.header}>
