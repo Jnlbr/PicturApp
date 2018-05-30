@@ -20,10 +20,11 @@ export default (provider) => {
     // TODO: Verify that the provider is not missing 
     return new Promise((res,rej) => {
         auth.signInWithPopup(_provider).then((result) => {
-            let { uid, displayName, email } = result.user;
+            let { uid, displayName, email, photoURL } = result.user;
             database.doc('users/' + uid).set({
-                name: displayName,
+                displayName: displayName,
                 email: email,
+                photoURL: photoURL,
             }).then(() => {
                 console.log('User saved!');
                 res();              

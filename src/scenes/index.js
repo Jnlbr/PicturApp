@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { AppBar } from '../components'
+import AppBar from '../components/AppBar';
 import Home from './Home';
 
 const styles = {

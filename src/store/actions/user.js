@@ -11,10 +11,10 @@ export function login(form) {
             dispatch({
                 type: LOGGED_IN,
             });
-        }).catch((err) => {
+        }).catch((error) => {
             dispatch({
                 type: LOGIN_FAILED,
-                errorMessage: err,
+                errorMessage: error,
             });
         });
     }

@@ -3,21 +3,17 @@ import AppBar from './appBar';
 import { connect } from 'react-redux';
 
 class AppBarContainer extends Component {
-    // state = {
-    //     isLogged: false,
-    // }
-    // componentWillReceiveProps(nextProps) {
-
-    // }
+    
     render() {
+        console.log(this.props.isLogged)
 
-        return <AppBar />
+        return <AppBar isLogged={this.props.isLogged} />
         
     }
 }
 
 const mapStateToProps = state => ({
-    logged: state.logged,
+    isLogged: state.auth.isLogged,
 })
 
 export default connect(mapStateToProps)(AppBarContainer)

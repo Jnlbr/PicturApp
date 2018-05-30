@@ -1,14 +1,12 @@
 import React from 'react';
-import { GoogleCredentials, LogoutButton, Pictures, FileUpload } from '../../components';
+import PictureList from '../../components/PictureList';
+import FileUpload from '../../components/FileUpload';
 
-const Home = ({...props, isLogged}) => (
+const Home = ({ isLogged }) => (
     <div>
         <h1> Is logged? {String(isLogged)} </h1>
-        <GoogleCredentials />
-        <LogoutButton />
         <FileUpload />
-        <Pictures />
-        
+        <PictureList />
     </div>
 );
 

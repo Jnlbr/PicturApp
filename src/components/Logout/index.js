@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import { isAuth } from '../../store/actions/user';
-import LogoutButton from './logoutButton';
+import Logout from './logout';
 import { logOut } from '../../api'
 
-class LogoutButtonContainer extends Component {
+class LogoutContainer extends Component {
     handleClick = () => {            
         logOut().then(() => {
             // Handle success, send redirect or something
@@ -14,8 +12,8 @@ class LogoutButtonContainer extends Component {
     }
     render() {
 
-        return <LogoutButton handleClick={this.handleClick} />
+        return <Logout handleClick={this.handleClick} />
     }
 }
 
-export default LogoutButtonContainer
+export default LogoutContainer

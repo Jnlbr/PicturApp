@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import Pictures from './pictures';
 import { getPictures } from '../../api'
 
-class PicturesContainer extends Component {
+class PictureList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            images: [],
+            pictures: [],
         }
     }
     componentDidMount() {
         getPictures().then((pictures) => {
             this.setState({
-                images: pictures
+                pictures: pictures
             })
         }).catch((error) => {
             console.log(error)
@@ -21,12 +21,15 @@ class PicturesContainer extends Component {
         })
     }
     render() {
+        
         return (
-            <Pictures 
-                images={this.state.images}
-            />
+            <div>
+                <Pictures
+                    pictures={this.state.pictures}
+                />
+            </div>
         );
     }
 }
 
-export default PicturesContainer;
+export default PictureList;

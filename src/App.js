@@ -5,12 +5,11 @@ import Main from './scenes';
 import { isAuth } from './store/actions/user';
 import withRoot from './util/withRoot';
 
-class AppContainer extends Component {
+class AppContainer extends Component {    
     componentDidMount() {
         let { isAuth } = this.props;
         auth.onAuthStateChanged((user) => {
             if (user) {
-                console.log(user)
                 isAuth(true);
             } else {
                 console.log('Is not authenticated');
