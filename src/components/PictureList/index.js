@@ -14,11 +14,11 @@ class PictureList extends Component {
         getPictures().then((pictures) => {
             this.setState({
                 pictures: pictures
-            })
+            });
         }).catch((error) => {
             console.log(error)
             // Handle error
-        })
+        });
     }
     render() {
         

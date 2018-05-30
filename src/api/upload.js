@@ -4,12 +4,14 @@ import { database, auth } from './firebase';
 export default (storageRef, title = 'Image', description = 'This is an image', tags = []) => {
     
     return new Promise((res,rej) => { 
-        const { uid } = auth.currentUser;
+        const { uid, displayName, photoURL } = auth.currentUser;
 
         // ERROR: if image does not exist
         storageRef.getDownloadURL().then((url) => {
             database.collection('pictures').add({
-                userId: uid,
+                uid: uid,
+                displayName: displayName,
+                photoURL: photoURL,
                 title: title,
                 url: url,
                 description: description,

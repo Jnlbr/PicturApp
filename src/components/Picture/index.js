@@ -9,6 +9,7 @@ class PictureContainer extends Component {
         this.state = {
             picture: {...props},
             comment: '',
+            expanded: false,
         }
     }
     handleComment = () => {
@@ -28,15 +29,23 @@ class PictureContainer extends Component {
             comment: event.target.value,
         });
     }
+    handleExpandClick = () => {
+        this.setState({ expanded: !this.state.expanded });
+    }
 
     render() {
-        const { url, title } = this.state.picture; // For now
+        const { url, description, displayName, photoURL, comments } = this.state.picture; // For now
         
         return <Picture
             handleTextChange={this.handleTextChange}
-            handleComment={this.handleComment} 
+            handleComment={this.handleComment}
+            handleExpandClick={this.handleExpandClick}
+            displayName={displayName}
+            photoURL={photoURL}
             url={url} 
-            title={title}
+            description={description}
+            comments={comments}
+            expanded={this.state.expanded}
         />
     }
 }
